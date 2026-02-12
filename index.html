@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hello Love ❤️</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&family=Great+Vibes&family=Dancing+Script&display=swap" rel="stylesheet">
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  overflow-x: hidden;
+  background: linear-gradient(135deg,#ffd6e7,#ffeaf4);
+}
+
+/* Floating hearts, teddies, lilies */
+.floating {
+  position: fixed;
+  bottom: -50px;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+@keyframes floatUp { 0% { transform: translateY(0); } 100% { transform: translateY(-110vh); } }
+
+/* Glow text */
+.glow-text {
+  font-family: 'Great Vibes', cursive;
+  font-size: 60px;
+  margin-top: 100px;
+  color: #ff2e75;
+  text-shadow: 0 0 10px #ff8dc1, 0 0 20px #ff8dc1, 0 0 30px #ff2e75;
+  opacity: 0;
+  transition: opacity 2s ease;
+}
+
+/* Music button */
+.music-btn {
+  margin-top: 20px;
+  background: #ff77aa;
+  color: white;
+  padding:12px 25px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-size:16px;
+}
+
+/* Proposal */
+#proposal { opacity: 0; transition: opacity 2s ease; }
+#proposal h2 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 28px;
+  margin: 20px 0;
+  color: #ff2e75;
+}
+
+/* Buttons */
+button {
+  padding: 12px 25px;
+  margin: 10px;
+  border: none;
+  border-radius: 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.yes { background: #ff2e75; color: white; }
+.no { background: #444; color: white; position: relative; }
+.hidden { display: none; }
+
+/* Flower & Letter */
+#flowerSection { margin-top: 30px; opacity:0; transition: opacity 1.5s;}
+#flowerArea { margin-top: 40px; opacity:0; transition: opacity 1.5s;}
+#lily { font-size: 120px; animation: pop 1.5s ease forwards; opacity:0;}
+@keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity:1; } }
+
+#letter { max-width: 600px; margin: 20px auto; font-size: 20px; line-height: 1.8; font-family: 'Great Vibes', cursive; opacity: 0; transition: opacity 2s ease; }
+#letter p { opacity:0; transition: opacity 1.5s ease; }
+
+/* Popup */
+.popup { 
+  position: fixed; top: 30%; left: 50%; transform: translate(-50%,-50%); 
+  background: white; padding: 20px; border-radius: 20px; 
+  box-shadow: 0 0 20px rgba(0,0,0,0.2); z-index: 9999; 
+  opacity: 0; pointer-events:none; 
+  transition: opacity 1s ease; 
+}
+.popup.show { opacity: 1; pointer-events:auto; }
+
+/* Confetti Canvas */
+#confetti-canvas { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+
+/* Rose rain */
+.rose { position: fixed; top:-50px; font-size: 24px; animation: fall 5s linear forwards; }
+@keyframes fall { 0% { top:-50px; } 100% { top:100vh; } }
+
+/* Happy message */
+#happyMessage { opacity:0; font-family:'Dancing Script', cursive; font-size:28px; color:#ff2e75; text-shadow:0 0 10px #ff8dc1; transition:opacity 2s ease; margin-top:20px; }
+</style>
+</head>
+<body>
+
+<!-- Landing Section -->
+<div id="landing">
+  <button class="music-btn" id="playMusicBtn">▶ Play Music 🎶</button>
+  <h1 id="hello" class="glow-text">Hello Love 💗</h1>
+  <h2 id="goodMorning" class="glow-text" style="font-family:'Dancing Script', cursive; font-size:32px;">Good Morning</h2>
+</div>
+
+<!-- Proposal Section -->
+<div id="proposal">
+  <h2>Will you Be mine — not for a moment, not for a lifetime… but always and forever, until the last star fades and eternity ends.</h2>
+  <button class="yes" id="yesBtn">💖 Kabul Hai</button>
+  <button class="no" id="noBtn">🙈 No</button>
+</div>
+
+<!-- Flower Section -->
+<div id="flowerSection" class="hidden">
+  <button id="grabFlowerBtn">Grab Your Flower 🌸</button>
+</div>
+
+<div id="flowerArea" class="hidden">
+  <div id="lily">🌸</div>
+  <div id="letter">
+    <p id="line1">When you love someone,</p>
+    <p id="line2">you have to be brave — brave enough to tell them you love them, or brave enough to watch them love someone else.</p>
+    <p id="line3">And I don’t want to be the second one.</p>
+    <p id="line4">As I said earlier… I intend to be your last.</p>
+    <p id="line5">Yours, Santa Klaus ❤️</p>
+    <p id="line6">If you are in, I will be waiting for your text</p>
+  </div>
+</div>
+
+<!-- Popup -->
+<div id="popup" class="popup">
+  <p>Are you sure, Love? Think again 😜💗</p>
+  <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" width="150">
+  <br><br>
+  <button onclick="closePopup()">Okay 😅</button>
+</div>
+
+<!-- Confetti Canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- YouTube iframe -->
+<iframe id="ytplayer" width="0" height="0"
+src="https://www.youtube.com/embed/Vabo2KVaEwA?enablejsapi=1"
+frameborder="0" allow="autoplay"></iframe>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+// Floating elements
+setInterval(() => {
+  const el = document.createElement("div");
+  el.className = "floating";
+  const arr = ["💖","🧸","🌸"];
+  el.innerHTML = arr[Math.floor(Math.random()*arr.length)];
+  el.style.left = Math.random()*100 + "vw";
+  el.style.fontSize = (Math.random()*20+20)+"px";
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),6000);
+}, 500);
+
+// Play Music & Landing Text
+const playBtn = document.getElementById("playMusicBtn");
+const helloText = document.getElementById("hello");
+const goodMorningText = document.getElementById("goodMorning");
+playBtn.addEventListener("click", () => {
+  playBtn.style.display = "none";
+  document.getElementById("ytplayer").contentWindow.postMessage(
+    '{"event":"command","func":"playVideo","args":""}', '*'
+  );
+  setTimeout(()=> helloText.style.opacity=1, 500);
+  setTimeout(()=> goodMorningText.style.opacity=1, 1500);
+  setTimeout(()=> document.getElementById("proposal").style.opacity=1, 2500);
+});
+
+// No Button Behavior - Fixed
+const noBtn = document.getElementById("noBtn");
+let noHoverCount = 0;
+let noClicked = false;
+
+function showPopup() {
+  noBtn.style.display = "none";
+  document.getElementById("popup").classList.add("show");
+}
+
+noBtn.addEventListener("mouseover", () => {
+  if (noHoverCount < 2 && !noClicked) {
+    noBtn.style.position = "absolute";
+    noBtn.style.left = Math.random()*80 + "%";
+    noBtn.style.top = Math.random()*80 + "%";
+    noHoverCount++;
+  } else if (!noClicked) {
+    noClicked = true;
+    showPopup();
+  }
+});
+
+noBtn.addEventListener("click", () => {
+  if (!noClicked) {
+    noClicked = true;
+    showPopup();
+  }
+});
+
+function closePopup() {
+  const popup = document.getElementById("popup");
+  popup.classList.remove("show");
+}
+
+// Kabul Hai Button
+const yesBtn = document.getElementById("yesBtn");
+yesBtn.addEventListener("click", ()=>{
+  // Confetti
+  confetti({particleCount: 150, spread: 70, origin: { y: 0.6 }});
+  
+  // Rose rain
+  for(let i=0;i<20;i++){
+    const rose = document.createElement("div");
+    rose.className="rose";
+    rose.style.left=Math.random()*100+"vw";
+    rose.innerHTML="🌹";
+    document.body.appendChild(rose);
+    setTimeout(()=>rose.remove(),5000);
+  }
+
+  // Happy message
+  setTimeout(()=>{
+    alert("You just made me the happiest person alive 💖");
+    document.getElementById("flowerSection").classList.remove("hidden");
+    document.getElementById("flowerSection").style.opacity=1;
+  },1000);
+});
+
+// Grab Flower
+const grabFlowerBtn = document.getElementById("grabFlowerBtn");
+const flowerArea = document.getElementById("flowerArea");
+const lily = document.getElementById("lily");
+grabFlowerBtn.addEventListener("click", ()=>{
+  flowerArea.classList.remove("hidden");
+  flowerArea.style.opacity=1;
+  lily.style.opacity=1;
+  // Show letter after 3 sec sequentially
+  setTimeout(()=>{
+    document.getElementById("letter").style.opacity=1;
+    const lines = ["line1","line2","line3","line4","line5","line6"];
+    lines.forEach((id,i)=>{
+      setTimeout(()=>document.getElementById(id).style.opacity=1, i*1500);
+    });
+  },3000);
+});
+</script>
+</body>
+</html>
